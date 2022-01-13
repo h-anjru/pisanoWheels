@@ -55,11 +55,11 @@ We were not sure what to do with the thousands of these wheels I had generated. 
 
 ![](figures/3_8_21.gif)
 
-*modulos 3, 8, 21, 55, 144, 377, 987, 2584, 6765, 17711, 46368, 121393, 317811*
+*modulos 3, 8, 21, 55, 144, 377, 987, 2584, 6765, 17711, 46368, 121393, 317811. [F(2n) = bisection of Fibonacci sequence: a(n) = 3*a(n-1) - a(n-2)](https://oeis.org/A001906)*
 
 ![](figures/5_13_34.gif)
 
-*modulos 5, 13, 34, 89, 233, 610, 1597, 4181, 10976, 28657, 75025, 196418*
+*modulos 5, 13, 34, 89, 233, 610, 1597, 4181, 10946, 28657, 75025, 196418. [a(n) = 3*a(n-1) - a(n-2) for n >= 2, with a(0) = a(1) = 1.](https://oeis.org/A001519)*
 
 ![](figures/exploring-the-data.png)
 
@@ -67,4 +67,4 @@ We were not sure what to do with the thousands of these wheels I had generated. 
 
 ## The code and the data
 
-The code is some of my first Python code. It's ugly, but it got the job done, so I present it as-is. I've also included [a subset of the wheels that I generated and the spreadsheet I used to explore the patterns within the data](data/). I've forgotten more than I remember about finding those patterns, but perhaps one day I can pick up where I left off. For now, take pleasure in watching the sequences of Grimes number wheels unfold.
+The code is some of my first Python code. It's ugly, but it got the job done, so I present it as-is. I've also included [a subset of the wheels that I generated and the spreadsheet I used to explore the patterns within the data](data/). I've forgotten more than I remember about finding those patterns; I searched [OEIS](https://oeis.org/) on 2022 Jan 13 and found that at least two of the "wheel sequences" that I found are known integer sequences. Four years ago when I undertook this project, however, I found these wheel sequences more or less through brute force, inspecting one wheel after another and playing with sums upon sums of the Fibonacci sequence. Perhaps one day I can pick up where I left off. For now, take pleasure in watching the sequences of Grimes number wheels unfold.
