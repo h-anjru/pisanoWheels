@@ -5,12 +5,12 @@
 __author__ = 'Andrew Rowles'
 __email__ = 'andrew@rowles.io'
 
-import numpy as np
+import matplotlib.pyplot as plt
 
 # The list length of the Fibonacci Sequence
-FIB_LIM = 15000
-MODULO = list(range(1598,10000))
-#MODULO = 3
+FIB_LIM =20000
+#MODULO = list(range(999,1598))
+MODULO = [25, 25, 50, 75, 125, 200, 325, 525, 850, 1375, 2225, 3600, 5825, 9425, 15250, 24675, 39925, 64600, 104525, 169125, 273650, 442775, 716425, 1159200, 1875625, 3034825, 4910450, 7945275, 12855725, 20801000, 33656725, 54457725, 88114450, 142572175, 230686625, 373258800, 603945425, 977204225]
 
 def F():
     """ Generate sequence of Fibonacci numbers.
@@ -77,6 +77,8 @@ def pisano_period(mod=MODULO, lim=FIB_LIM, console=False):
         print('Pisano Period modulo %s' % mod)
         print('Period Length: %s' % find_period(mod_fibs))
         s = mod_fibs[:period]
+        # count zeroes for classification
+        zeroes = s.count(0)
         string = ' '.join(str(e) for e in s)
         string = string.replace(' 0 ','\n0 ')
         #print(string)
@@ -91,31 +93,40 @@ def pisano_period(mod=MODULO, lim=FIB_LIM, console=False):
         string = string.replace(' 0 ','\n0 ')
         #print(string)
 
-        # pie chart of Nateloop
+        # pie chart of the Grimes number
         # generate slices
         per = find_period(mod_fibs)
         ratio = 100 / per
-
-        s_flip = [-e+max(s) for e in s]
+        slice = [ratio] * per
+        # flip values to so that 0=white, max = black
+        s = [-e+max(s) for e in s]
         # convert Pisano period to grayscale hex values
-        s0 = [hex(round(255 * e/max(s_flip))) for e in s] # stretch range to 0-255
+        s0 = [hex(round(255 * e/max(s))) for e in s] # stretch range to 0-255
         s0 = [e.replace('0x','') for e in s0] # remove 0x from beginning
         for ii in range(0,len(s0)):
             if len(s0[ii]) == 1:
                 s0[ii] = '0' + s0[ii]
         s0 = ['#'+e*3 for e in s0]
-
-        zeroes = s.count(0)
-    return mod,find_period(mod_fibs),zeroes
+        # plot and save
+        plt.pie(slice,explode=None,labels=None,colors=s0,
+                startangle=360/(2*per)-90,counterclock=False,radius=1.618,
+                wedgeprops={'linewidth':0,'edgecolor':'white'})
+        plt.axis('equal')
+        plt.axis([-2,2,-2,2])
+        plt.annotate('Pisano period, modulo %s' % mod,
+                     xy=(-2,-1.83),fontsize=5)
+        plt.annotate('Period length = %s' % per,
+                     xy=(-2,-1.89),fontsize=5)
+        plt.annotate(string,xy=(-2,-1.49),fontsize=5)
+        # save in different folders based on class
+        plt.savefig('test2//fibwheel'+str(mod)+'.png',dpi=600, 
+                    bbox_inches='tight')
+        plt.close()
+    return None
 
     
 def main():
-    chart = []
-    for ii in range(min(MODULO),max(MODULO)+1):
-        [m,p,z] = pisano_period(ii,FIB_LIM,True)
-        chart.append([m,p,z])
-    return chart
+    [pisano_period(m,FIB_LIM,True) for m in MODULO]
 
-table = main()
 
-np.savetxt('table_'+str(min(MODULO)+1)+'_'+str(max(MODULO)+1)+'.csv',table,delimiter=',')
+main()
